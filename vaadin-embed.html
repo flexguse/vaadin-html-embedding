@@ -13,6 +13,14 @@ html, body {
 	href="./VAADIN/themes/valo/favicon.ico">
 <link rel="icon" type="image/vnd.microsoft.icon"
 	href="./VAADIN/themes/valo/favicon.ico">
+<script>
+XMLHttpRequest.prototype._originalSend = XMLHttpRequest.prototype.send;
+var sendWithCredentials = function(data) {
+  this.withCredentials = true;
+  this._originalSend(data);
+};
+XMLHttpRequest.prototype.send = sendWithCredentials;
+</script>
 </head>
 <body scroll="auto" class="v-generated-body">
 	<div id="ROOT-2521314" class="v-app valo applicationui">
