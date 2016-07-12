@@ -6,14 +6,14 @@ The [Vaadin documentation](https://vaadin.com/docs/-/part/framework/advanced/adv
 
 The Vaadin Blog article [Using CORS with Vaadin](https://vaadin.com/blog/-/blogs/using-cors-with-vaadin) is more specific and this implementation is based on that article, but the spring-boot Vaadin application did not start working.
 
+The solution was to use the CORS filter based configuration in spring-boot.
+
 # Forum discussions
 
 Please follow the discussion in
 
 - [Stackoverflow](http://stackoverflow.com/questions/38151762/embedding-vaadin-spring-boot-application-into-html)
 - [the Vaadin forum](https://vaadin.com/forum#!/thread/13449342)
-
-# Error reproduction
 
 To reproduce the embedding error just clone this repository to your local machine, a configured Java 1.8 and Maven 3.x is required.  
 
@@ -24,4 +24,4 @@ The application starts and is usable.
 
 ## Embedded application
 
-Open the local file 'vaadin-embed.html' in your browser. The application is loaded, but the icon font is broken, it is not possible to add text or switch the tabs.
+Open the local file 'vaadin-embed.html' in your browser. The application is loaded, the icon font works, it is possible to add text or switch the tabs.

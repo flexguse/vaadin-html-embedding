@@ -1,15 +1,11 @@
-/**
- * 
- */
 package de.flexguse.vaadin.demo;
 
+import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
-import de.flexguse.vaadin.demo.servlet.CORSServlet;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 /**
  * The Spring application configuration
@@ -21,32 +17,26 @@ import de.flexguse.vaadin.demo.servlet.CORSServlet;
 public class HtmlEmbeddingApplicationConfiguration {
 
 	/**
-	 * Enable CORS for the complete Vaadin app.
+	 * This servlet filter was found in
+	 * https://spring.io/blog/2015/06/08/cors-support-in-spring-framework.
 	 * 
-	 * @return
+	 * It is important to understand this CORS configuration may be a security
+	 * leak and was created for demonstration purposes only. Ensure to configure
+	 * the allowed origins!
 	 */
 	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurerAdapter() {
+	public FilterRegistrationBean corsFilter() {
 
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**");
-			}
-
-		};
-
-	}
-
-	/**
-	 * custom Vaadin servlet allowing CORS requests
-	 * 
-	 * @return
-	 */
-	@Bean(name = "vaadinServlet")
-	public CORSServlet corsServlet() {
-
-		return new CORSServlet();
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		CorsConfiguration config = new CorsConfiguration();
+		config.setAllowCredentials(true);
+		config.addAllowedOrigin("*");
+		config.addAllowedHeader("*");
+		config.addAllowedMethod("*");
+		source.registerCorsConfiguration("/**", config);
+		FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
+		bean.setOrder(0);
+		return bean;
 
 	}
 
